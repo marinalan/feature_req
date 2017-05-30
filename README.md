@@ -4,6 +4,7 @@ demo app for flask, knockoutjs, json rest api
 prepare PostgreSQL database
 - createuser -d bc
 - createdb feature_requests -O bc
+- createdb feature_requests_test -O bc
 
 to create schema and populate some data, enter python console:
 ```
