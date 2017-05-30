@@ -6,7 +6,8 @@ prepare PostgreSQL database
 - createdb feature_requests -O bc
 
 to create schema and populate some data, enter python console:
-```$ python
+```
+$ python
 from app import db
 from app import Client, ProductArea, FeatureRequest
 db.create_all()
