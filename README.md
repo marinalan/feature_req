@@ -24,4 +24,7 @@ db.session.add(ProductArea('Reports'))
 db.session.commit()
 exit()
 ```
-
+To run tests, from top folder ( with app.py), type
+```
+py.test
+```

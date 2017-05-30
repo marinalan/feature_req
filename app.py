@@ -5,14 +5,14 @@ from sqlalchemy.inspection import inspect
 import json
 import datetime
 
-from flask.ext.heroku import Heroku
+from flask_heroku import Heroku
 
 app = Flask(__name__)
-#app.config['SQLALCHEMY_DATABASE_URI']='postgresql://bc:ThieNg4qui@localhost/feature_requests'
-#app.config['DEBUG']=True
+app.config['SQLALCHEMY_DATABASE_URI']='postgresql://bc:ThieNg4qui@localhost/feature_requests'
+app.config['DEBUG']=True
 app.config['SECRET_KEY']='\xf5\xaa\x1bt\xce3\x85q\xf0S\x1b\x91\xda\tu\xc9\x0f\xd3\xben9L\x1a\x06'
 
-heroku = Heroku(app)
+#heroku = Heroku(app)
 
 db = SQLAlchemy(app)
 
@@ -181,16 +181,17 @@ def get_feature_request(id):
 
 @app.route('/api/v1.0/feature_requests/<int:id>', methods = ['PUT'])
 def update_feature_request(id):
+      fr = FeatureRequest.query.get(id)
+
       data = request.get_json(force=True)
       # reorder prioriy for specific client, if needed
       if 'priority' in data and db.session.query(FeatureRequest).filter(FeatureRequest.id != id).filter_by(
-                          client_id=data['client_id'], priority=data['priority']).count():
-        for fr in db.session.query(FeatureRequest).filter(FeatureRequest.id != id).filter_by(
-                                   client_id=data['client_id']).filter(FeatureRequest.priority>=data['priority']
+                          client_id=fr.client_id, priority=data['priority']).count():
+        for req in db.session.query(FeatureRequest).filter(FeatureRequest.id != id).filter_by(
+                                   client_id=fr.client_id).filter(FeatureRequest.priority>=data['priority']
                                   ).order_by(FeatureRequest.priority.desc()):
-          fr.priority = fr.priority + 1
+          req.priority = req.priority + 1
 
-      fr = FeatureRequest.query.get(id)
       fr.title = data.get('title', fr.title) 
       fr.description = data.get('description', fr.description) 
       fr.client_id = data.get('client_id', fr.client_id) 

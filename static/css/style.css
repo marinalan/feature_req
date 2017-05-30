@@ -6,3 +6,4 @@ body {
 td, th {
   padding: 0 20px;
 }
+table { margin-bottom: 20px; }
