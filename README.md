@@ -29,3 +29,8 @@ To run tests, from top folder ( with app.py), type
 ```
 py.test
 ```
+html5 input type 'date' used in template for target_date. Expected format is
+yyyy-mm-dd for value, even if placeholder may show dd/mm/yyyy. I suggest to use
+Chrome browser and input date by invoking built-in date-picker, nothing else was
+done to ensure proper format.
+
